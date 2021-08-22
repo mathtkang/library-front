@@ -1,0 +1,66 @@
+{% extends "_base.html" %}
+
+{% block title %}엘리스 책 목록{% endblock %}
+
+{% block script %}
+<script>
+
+</script>
+{% endblock %}
+
+{% extends "_header.html" %}
+
+{% block content %}
+
+<h2>엘리스 책 목록</h2>
+<h2>전체 도서 열람 페이지</h2>
+
+{% if book_list %}
+{% for book in book_list.items %}
+<div>
+    <div>
+        <!-- api 이름! book_detail페이지로 이동 -->
+        <a href="{{ url_for('main.function_name') }}"><img class="" src="../static/img/{{ book.img_lick }}.jpg" alt="{{book.book_name}}" style="height:550px;width:430px;"></a>
+    </div>
+    <div>
+        <table class="book_list" style="width:85%; height:100%;margin-left:100px;">
+            <tr>
+                <th>책 이름</th>
+                <td>{{book.book_name}}</td>
+            </tr>
+            <tr>
+                <th>저자</th>
+                <td>{{book.author}}</td>
+            </tr>
+            <tr>
+                <th>평점</th>
+                <td>
+                    {% for _ in range(book.star) %}
+                        <i class="bi bi-star-fill" style="color: red;">*</i>
+                    {% endfor %}
+                    {% for _ in range(5 - book.star) %}
+                        <i class="bi bi-star" style="color: gray;">*</i>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>대여 가능 여부</th>
+                {% if book.remaining == 0 %}
+                    <td style="color: red;">현재 대여가 불가능합니다.</td>
+                {% else %}
+                    <td>{{book.remaining}}권 남아있습니다.</td>
+                {% endif %}
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <button onclick="alert()">대여하기</button>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+
+
+
+{% endblock %}
